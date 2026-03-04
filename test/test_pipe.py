@@ -206,7 +206,7 @@ class MovingAverageStrategy(Strategies):
         self.slow_period = slow_period
         self.contract = Stock(symbol, 'SMART', 'USD')
         print(f"Moving Average Strategy initialized for {symbol} ({fast_period}/{slow_period} periods).")
-
+ 
     def analyze_data(self, df: pd.DataFrame) -> Optional[str]:
         """Calculates MAs and generates a trade signal."""
         ib = self._conn.get_ib()

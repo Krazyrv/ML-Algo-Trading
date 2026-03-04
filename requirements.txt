@@ -1,0 +1,5 @@
+dotenv
+
+nest_asyncio
+
+ib_insync
