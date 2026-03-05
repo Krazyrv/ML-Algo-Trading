@@ -1,5 +1,15 @@
+ipykernel
+
 dotenv
 
 nest_asyncio
 
 ib_insync
+
+pandas
+
+numpy
+
+matplotlib
+
+torch 
