@@ -41,7 +41,7 @@ class MovingAverageStrategy(Strategy):
         # (1 = Long, -1 = Short, 0 = Flat)
         self.current_position = 0 
         
-    def calculate_signals(self, event):
+    def  calculate_signals(self, event):
         """
         Triggered every time a new MarketEvent is pulled from the queue.
         """

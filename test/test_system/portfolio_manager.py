@@ -15,6 +15,7 @@ class PortfolioManager:
         
         # Tracks how many shares of each symbol we currently own
         self.holdings = {} 
+        self.equity_curve = [] 
         
     def update_signal(self, event):
         """
@@ -69,3 +70,12 @@ class PortfolioManager:
             print(f"[PORTFOLIO] Fill received. New Cash Balance: ${self.current_cash:.2f} | Holdings: {self.holdings}")
 
             
+    def record_equity(self):
+        total_holdings_value = 0.0
+        for symbol, qty in self.holdings.items():
+            latest = self.data_handler.get_latest_bar(symbol)
+            if latest: total_holdings_value += (qty * latest['close'])
+        
+        total_equity = self.current_cash + total_holdings_value
+        latest_date = self.data_handler.get_latest_bar(list(self.holdings.keys())[0] if self.holdings else 'AAPL')['datetime']
+        self.equity_curve.append({'datetime': latest_date, 'equity': total_equity})
