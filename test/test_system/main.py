@@ -25,7 +25,16 @@ if __name__ == "__main__":
     contract = Stock(symbol, 'SMART', 'USD')
     if MODE == "BACKTEST":
         
-        dummy_df = ib_conn.get_data(contract, durationStr="60 D", barSizeSetting="1 hour")
+        try:
+            dummy_df = ib_conn.get_data(contract, durationStr="60 D", barSizeSetting="1 hour")
+        except:
+            import pandas as pd
+            import numpy as np
+            # 1. Create simulated data
+            dates = pd.date_range(start='2023-01-01', periods=200, freq='D')
+            prices = 150 + 20 * np.sin(np.linspace(0, 4 * np.pi, 200))
+            dummy_df = pd.DataFrame({'open': prices, 'high': prices+1, 'low': prices-1, 'close': prices}, index=dates)
+        
         data_handler = HistoricPandasDataHandler(events_queue, dummy_df, symbol)
         strategy = MovingAverageStrategy(events_queue, data_handler, symbol, fast_period=10, slow_period=30)
         portfolio = PortfolioManager(events_queue, data_handler, initial_capital=100000.0)
